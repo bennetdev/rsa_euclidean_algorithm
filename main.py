@@ -1,5 +1,11 @@
 from prettytable import PrettyTable
 
+def get_next_numbers(e, m, lst):
+    if e % m == 0:
+        return [[e, m, e // m, e % m]]
+    else:
+        return lst + get_next_numbers(m, e % m, [[e, m, e // m, e % m]])
+
 # define rsa variables
 p = int(input("p: "))
 q = int(input("q: "))
@@ -7,19 +13,13 @@ n = p * q
 e = int(input("e: "))
 m = (p - 1) * (q - 1)
 
-lst = []
 mod = e % m
 # copy input variables to modify them
 m_lst = m
 e_lst = e
 # run code while the euclidean algorithm is not finished
-while mod != 0:
-    mod = e_lst % m_lst
-    # append current line/state to lst
-    lst.append([e_lst, m_lst, e_lst // m_lst, e_lst % m_lst])
-    # change variables
-    e_lst = m_lst
-    m_lst = mod
+lst = get_next_numbers(e_lst, m_lst, [])
+print(lst)
 # initialize with 0 and 1
 numbers = [[0, 1]]
 # reverse lst
