@@ -2,7 +2,7 @@ from prettytable import PrettyTable
 
 def get_next_numbers(e, m, lst):
     if e % m == 0:
-        return [[e, m, e // m, e % m]]
+        return lst + [[e, m, e // m, e % m]]
     else:
         return lst + get_next_numbers(m, e % m, [[e, m, e // m, e % m]])
 
