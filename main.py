@@ -4,9 +4,13 @@ from prettytable import PrettyTable
 # recursive function for euclidean algorithm
 def get_next_numbers(e, m, lst):
     if e % m == 0:
-        return lst + [[e, m, e // m, e % m]]
+        return lst + [[e, m, e // m, e % m, 0, 1]]
     else:
-        return lst + get_next_numbers(m, e % m, [[e, m, e // m, e % m]])
+        new_lst = get_next_numbers(m, e % m, [[e, m, e // m, e % m]])
+        a, b = new_lst[1][-2], new_lst[1][-1]
+        e_divided_m = new_lst[0][2]
+        new_lst[0].extend([b, a-(e_divided_m * b)])
+        return lst + new_lst
 
 
 # define rsa variables
@@ -26,11 +30,6 @@ lst = get_next_numbers(e_lst, m_lst, [])
 numbers = [[0, 1]]
 # reverse lst
 lst = lst[::-1]
-# calculate d
-for i in range(1, len(lst)):
-    # append numbers folowing the calculation
-    nums = [numbers[i - 1][1], numbers[i - 1][0] - (lst[i][2] * numbers[i - 1][1])]
-    numbers.append(nums)
 # if d is incorrect (smaller than or equal to zero)
 if numbers[-1][0] <= 0:
     d = numbers[-1][0] + ((p - 1) * (q - 1))
@@ -41,7 +40,7 @@ table = PrettyTable(["e", "m", "e//m", "e%m", "a", "b"])
 lst = lst[::-1]
 numbers = numbers[::-1]
 for index, i in enumerate(lst):
-    table.add_row([i[0], i[1], i[2], i[3], numbers[index][0], numbers[index][1]])
+    table.add_row(i)
 # print values and table
 print(table)
 print("Private: ", d)
