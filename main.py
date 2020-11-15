@@ -26,10 +26,11 @@ m_lst = m
 e_lst = e
 # get result of recursiv euclidean algorithm
 lst = get_next_numbers(e_lst, m_lst, [])
-# initialize with 0 and 1
-numbers = [[0, 1]]
+
 # reverse lst
 lst = lst[::-1]
+# initialize with 0 and 1
+numbers = [[element[-2], element[-1]] for element in lst]
 # if d is incorrect (smaller than or equal to zero)
 if numbers[-1][0] <= 0:
     d = numbers[-1][0] + ((p - 1) * (q - 1))
